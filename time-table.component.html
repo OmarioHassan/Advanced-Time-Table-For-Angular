@@ -1,0 +1,80 @@
+<!-- New Table -->
+<div id="timeTaple">
+  <!-- Start Table Header -->
+  <div id="tableHeader">
+    <div>الإسم</div>
+    <div>9:00 ص</div>
+    <div>10:00 ص</div>
+    <div>11:00 ص</div>
+    <div>12:00 ص</div>
+    <div>1:00 م</div>
+    <div>2:00 م</div>
+    <div>3:00 م</div>
+    <div>4:00 م</div>
+    <div>5:00 م</div>
+    <div>6:00 م</div>
+    <div>7:00 م</div>
+    <div>8:00 م</div>
+    <div>9:00 م</div>
+    <div>10:00 م</div>
+    <div>الإجمالي</div>
+  </div>
+  <!-- End Table Header -->
+  <!-- Start Table Body -->
+  <div id="tableBody">
+    <!-- Start Table Row -->
+    <div class="tableRow" *ngFor="let tech of technical">
+      <div class="nameCell">
+        <input type="radio" class="techNameRadio" /><label class="table-name" for="techName">{{ tech.name }}</label>
+      </div>
+      <div class="loopCell" #loopContainer>
+        <!-- Start Order Loop -->
+        <ng-container *ngFor="let order of tech.orders; let i = index">
+          <div
+            (mouseenter)="hideme[order.id] = !hideme[order.id]"
+            (mouseleave)="hideme[order.id] = !hideme[order.id]"
+            class="order-bar {{ order.status }}"
+            [ngStyle]="{
+              right: ((order.fromH - 9) * 60 + order.fromM) * (loopCellWidth / 840) + 'px',
+              width: ((order.toH - 9) * 60 + order.toM - ((order.fromH - 9) * 60 + order.fromM)) * (loopCellWidth / 840) + 'px'
+            }"
+          ></div>
+          <div
+            class="popupOrder"
+            [@popupAnimation]
+            id="orderId_{{ order.id }}"
+            *ngIf="hideme[order.id]"
+            [ngStyle]="{
+              position: 'absolute',
+              right: ((order.fromH - 9) * 60 + order.fromM) * (loopCellWidth / 840) + 'px'
+            }"
+          >
+            <div class="popupOrderState">
+              <span class="{{ order.status }}"></span>
+              <p>{{ order.details.title }}</p>
+            </div>
+            <div class="popupList">
+              <ul>
+                <li><span>إسم العميل : </span>{{ order.details.clientName }}</li>
+                <li><span>رقم الطلب : </span>{{ order.id }}</li>
+                <li><span>رقم العميل : </span>{{ order.details.clientNumber }}</li>
+                <li><span>تليفون العميل : </span>{{ order.details.clientPhone }}</li>
+                <li><span>التاريخ : </span>{{ order.details.date }}</li>
+                <li><span>العرض : </span>{{ order.details.offer }}</li>
+              </ul>
+            </div>
+          </div>
+        </ng-container>
+        <!-- End Order Loop -->
+        <!-- Start Loop -->
+        <div *ngFor="let hour of hours" id="hour{{ hour }}" class="hourCell"></div>
+        <!-- End Loop -->
+      </div>
+      <div class="totelCell">10:30</div>
+    </div>
+    <!-- End Table Row -->
+  </div>
+  <!-- End Table Body -->
+</div>
+
+<!-- New Table -->
