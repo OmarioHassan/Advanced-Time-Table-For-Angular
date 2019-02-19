@@ -1,1 +1,2 @@
-# Advanced_Time_Table_Angular-2-
+Time Table Plugin With Popups For Details 
+Enjoy ^_^
